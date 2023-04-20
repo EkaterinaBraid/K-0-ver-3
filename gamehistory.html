@@ -1,0 +1,152 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+
+    <title>Крестики и нолики</title>
+</head>
+<body>
+ <style>
+      #navbar {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        border: 2px solid #FFFFFF;
+        border-radius: 30px 10px;
+        width: 600 px;
+        text-align: center;
+        background-color: #DCDCDC;
+      }
+      #navbar li { display: inline; }
+      #navbar a {
+        color: #000000;
+        padding: 5px 10px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+      }
+      #navbar a:hover {
+        border-radius: 20px 5px;
+        background-color: #7FFFD4;
+      }
+    </style>
+  </head>
+ 
+  <body>
+  
+    <ul id="navbar">
+	  <li><a href="playing field.html">Игровое поле</a></li>
+      <li><a href="activeplayers.html">Активные игроки</a></li>
+      <li><a href="gamehistory.html">История игр</a></li>
+	   <li><a href="listofplayers.html">Список игроков</a></li>
+	   <li><a href="exit.html">Выход</a></li>
+    </ul>
+
+<meta charset="UTF-8">
+<meta name="description" content="Free Web tutorials">
+<meta name="keywords" content="HTML,CSS">
+<meta name="author" content="WebCodeGeeks.com">
+<script src="Storage.js"></script>
+<link rel="stylesheet" href="StorageStyle.css">
+</head>
+<body onload="doShowAll()">
+	<h1>История игр</h1>
+	<form name=ShoppingList>
+
+		<div id="PlayArea">
+			<table>
+				<tr>
+
+					<td><b>Имя:</b><input type=text name=name></td>
+					<td><b>Победы/проигрыши:</b><input type=text name=data></td>
+
+				</tr>
+
+				<tr>
+					<td>
+					    <input type=button value="Сохранить"   onclick="SaveItem()"> 
+					    <input type=button value="Изменить" onclick="ModifyItem()"> 
+					    <input type=button value="Удалить" onclick="RemoveItem()">
+					  </td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="items_table">
+			<h2>История игр</h2>
+			<table id=list></table>
+			<p>
+				<label><input type=button value="Удалить" onclick="ClearAll()">
+					<i>* Удалить все</i></label>
+			</p>
+		</div>
+	</form>
+
+</body>
+</html>
+
+</div>
+<style>
+.wrapper table{
+  margin-top: 10px;
+  border-collapse:collapse;
+  width: 400px;
+}
+.wrapper td{
+  border: 1px solid #888;
+}
+</style>
+<script>
+function SaveItem() {
+			
+	var name = document.forms.ShoppingList.name.value;
+	var data = document.forms.ShoppingList.data.value;
+	localStorage.setItem(name, data);
+	doShowAll();
+	
+}
+
+function ModifyItem() {
+	var name = document.forms.ShoppingList.name.value;
+	document.forms.ShoppingList.data.value = localStorage.getItem(name);
+	doShowAll();
+}
+
+function RemoveItem() {
+	var name = document.forms.ShoppingList.name.value;
+	document.forms.ShoppingList.data.value = localStorage.removeItem(name);
+	doShowAll();
+}
+
+function ClearAll() {
+	localStorage.clear();
+	doShowAll();
+}
+
+// dynamically draw the table
+
+function doShowAll() {
+	if (CheckBrowser()) {
+		var key = "";
+		var list = "<tr><th>Имя</th><th>Победы/проигрыши</th></tr>\n";
+		var i = 0;
+		for (i = 0; i <= localStorage.length - 1; i++) {
+			key = localStorage.key(i);
+			list += "<tr><td>" + key + "</td>\n<td>"
+					+ localStorage.getItem(key) + "</td></tr>\n";
+		}
+		if (list == "<tr><th>Name</th><th>Value</th></tr>\n") {
+			list += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td></tr>\n";
+		}
+		document.getElementById('list').innerHTML = list;
+	} else {
+		alert('Cannot store shopping list as your browser do not support local storage');
+	}
+}
+
+</script>
